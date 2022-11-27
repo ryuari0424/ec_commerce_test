@@ -31,13 +31,20 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'user-admin:user'])->name('user.')->prefix('product')->group(function () {
-    Route::get('/user', [UserController::class, 'index'])->name('index');
-});
+// Route::middleware(['auth', 'user-admin:user'])->name('user.')->prefix('product')->group(function () {
+//     Route::get('/user', [UserController::class, 'index'])->name('index');
+// });
+
+Route::middleware(['auth'])->group(
+    function () {
+        Route::get('/product', [UserController::class, 'index'])->name('user.index');
+    }
+);
+
 // Route::middleware(['auth', 'user-admin:user'])->name('admin.')->prefix('product')->group(function () {
 //     Route::get('/admin', [AdminUserController::class, 'index'])->name('index');
 // });
 
 Route::get('/guest', [GuestUserController::class, 'index']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
