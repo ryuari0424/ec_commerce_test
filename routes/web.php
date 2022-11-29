@@ -31,13 +31,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::middleware(['auth', 'user-admin:user'])->name('user.')->prefix('product')->group(function () {
-//     Route::get('/user', [UserController::class, 'index'])->name('index');
-// });
+// admin-user route
+Route::middleware(['auth', 'admin'])->name('admin.')->prefix('product')->group(function () {
+    Route::get('/admin', [AdminUserController::class, 'index'])->name('index');
+});
 
-Route::middleware(['auth'])->group(
+Route::middleware(['auth', 'user'])->name('user.')->group(
     function () {
-        Route::get('/product', [UserController::class, 'index'])->name('user.index');
+        Route::get('/product', [UserController::class, 'index'])->name('index');
     }
 );
 
